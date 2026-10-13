@@ -2,4 +2,4 @@
 
 ---
 
-The code will be released when the paper is accepted.
+The code will be released when the paper is accepted (under review for pubilishing in Mathematics).
