@@ -1,0 +1,31 @@
+# PaCMoE, ablation study (Table 4), three-class setting (Section 3.6) and Figures 2-4.
+# Table 4 rows other than "full", the three-class setting and Figures 2-4 were produced with this setup.
+
+[experiment]
+setup = "ablation"
+seed = 2025             
+bundle_dir = "data/preprocessed/ablation"            # "data/preprocessed/ablation_3cls" for variant = "three_class"
+output_dir = "outputs/ablation"
+
+[ablation]
+# "full" | "router_uniform" (mean pooling of the experts) | "only_pt" | "only_pg" | "only_tg"
+# | "price_only" (text and graph branches removed) | "cls_only" (lambda_ret = lambda_vol = 0)
+# | "three_class" (down / neutral / up, neutral days kept)
+variant = "full"
+
+[model]
+hidden_dim = 256
+num_heads = 4
+dropout = 0.1
+
+[loss]
+weights = [1.0, 0.05, 0.05]
+huber_delta = 1.0
+
+[training]
+learning_rate = 8e-5
+batch_size = 128
+epochs = 15
+
+[evaluation]
+threshold = 0.5

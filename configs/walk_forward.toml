@@ -1,0 +1,27 @@
+# PaCMoE, rolling walk-forward evaluation (Section 3.4, Table 6).
+
+[experiment]
+setup = "walk_forward"
+seed = 2025             # Table 6 uses seeds 2025, 2026 and 2027
+bundle_dir = "data/preprocessed/walk_forward"   # contains fold_000, fold_001, fold_002 (configs/preprocess_walk_forward.toml)
+output_dir = "outputs/walk_forward"
+
+[model]
+hidden_dim = 256
+num_heads = 4
+dropout = 0.1
+
+[loss]
+weights = [1.0, 0.05, 0.05]
+huber_delta = 1.0
+
+[training]
+learning_rate = 8e-5
+batch_size = 128
+epochs = 15
+
+[evaluation]
+threshold = 0.5
+
+[walk_forward]          # Section 3.4 (the fold periods are set in configs/preprocess_walk_forward.toml)
+select_epochs = [10, 15]   # the epoch with the highest validation MCC among epochs 10-15 is reported

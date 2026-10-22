@@ -1,0 +1,40 @@
+# Preprocessing of the walk-forward evaluation (Section 3.4, Table 6): one bundle per fold.
+# Normalization statistics are fitted on the training period of each fold.
+
+[data]
+setup = "walk_forward"                          # preprocessing preset (pacmoe/preprocess/build.py)
+price_dir = "data/stocknet-dataset/price/raw"   # StockNet price files (all 88 stocks)
+text_dir = "data/text_cache/walk_forward"       # <text_dir>/<fold name>: released FinGPT / FinBERT outputs
+out_dir = "data/preprocessed/walk_forward"     # bundles are written to <out_dir>/<fold name>
+window = 60                                     # input window (trading days)
+cca_blas_threads = 8                            # BLAS threads of the original text CCA fit (not a model setting)
+
+# 16 months of training, 2 of validation, 2 of testing, shifted by 2 months; [start, end)
+[[fold]]
+name = "fold_000"
+train = ["2014-01-01", "2015-04-30"]
+val = ["2015-05-01", "2015-07-01"]
+test = ["2015-07-01", "2015-09-01"]
+
+[[fold]]
+name = "fold_001"
+train = ["2014-03-01", "2015-06-30"]
+val = ["2015-07-01", "2015-09-01"]
+test = ["2015-09-01", "2015-11-01"]
+
+[[fold]]
+name = "fold_002"
+cca_blas_threads = 2
+train = ["2014-05-01", "2015-08-31"]
+val = ["2015-09-01", "2015-11-01"]
+test = ["2015-11-01", "2016-01-01"]
+
+[labels]                                        # next-day return r_t in percent
+up_threshold = 0.55                             # up if r_t >= 0.55
+down_threshold = -0.55                          # down if r_t <= -0.55; days in between are removed
+vol_threshold = 1.0                             # volatility target: |r_t| >= 1.0
+vol_target = "fixed"                            # "scaled": |r_t| >= sigma_t (response to Reviewer 2)
+
+[graph]                                         # Section 2.2.3
+windows = [60, 126, 252]                        # correlation windows, averaged
+top_k = 10                                      # neighbours per stock

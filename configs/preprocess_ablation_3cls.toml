@@ -1,0 +1,25 @@
+# Preprocessing of the three-class setting (Section 3.6).
+
+[data]
+setup = "ablation"                              # preprocessing preset (pacmoe/preprocess/build.py)
+price_dir = "data/stocknet-dataset/price/raw"   # StockNet price files (all 88 stocks)
+text_dir = "data/text_cache/ablation_3cls"      # released FinGPT / FinBERT outputs (see README)
+out_dir = "data/preprocessed/ablation_3cls"
+window = 60                                     # input window (trading days)
+cca_blas_threads = 8                            # BLAS threads of the original text CCA fit (not a model setting)
+
+[split]                                         # [start, end)
+train = ["2014-01-01", "2015-08-01"]
+val = ["2015-08-01", "2015-10-01"]
+test = ["2015-10-01", "2016-01-01"]
+
+[labels]                                        # next-day return r_t in percent
+up_threshold = 0.55                             # up if r_t >= 0.55
+down_threshold = -0.50                          # down if r_t <= -0.50
+vol_threshold = 1.0                             # volatility target: |r_t| >= 1.0
+vol_target = "abs_price_diff"                   # |P_{t+1} - P_t| >= 1.0 (price units)
+use_neutral = true                              # days in between form the third class (neutral)
+
+[graph]                                         # Section 2.2.3
+windows = [60, 126, 252]                        # correlation windows, averaged
+top_k = 10                                      # neighbours per stock

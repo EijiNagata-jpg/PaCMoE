@@ -1,0 +1,26 @@
+# PaCMoE, main results (Table 3, Table 5, Section 3.5).
+# Only values stated in the paper are set here; implementation details are fixed in pacmoe/constants.py
+# and the differences between the reported setups in pacmoe/config.py.
+
+[experiment]
+setup = "main"          # "main" | "ablation" | "walk_forward"
+seed = 2025             # training seed
+bundle_dir = "data/preprocessed/main"   # preprocessed features (see README, "Data")
+output_dir = "outputs/main"
+
+[model]                 # Section 2.7, Table 2
+hidden_dim = 256
+num_heads = 4
+dropout = 0.1
+
+[loss]                  # Section 2.6.4, Eq. (26); Huber delta of Eq. (20)
+weights = [1.0, 0.05, 0.05]   # [lambda_cls, lambda_ret, lambda_vol]
+huber_delta = 1.0
+
+[training]              # Section 2.7, Table 2 (optimizer: AdamW)
+learning_rate = 8e-5
+batch_size = 128
+epochs = 15
+
+[evaluation]            # Section 2.1: fixed threshold, model selected by validation MCC
+threshold = 0.5

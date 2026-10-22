@@ -1,0 +1,24 @@
+# Preprocessing of the main setup with the scaled volatility target (response to Reviewer 2).
+
+[data]
+setup = "main"                                  # preprocessing preset (pacmoe/preprocess/build.py)
+price_dir = "data/stocknet-dataset/price/raw"   # StockNet price files (all 88 stocks)
+text_dir = "data/text_cache/main_volscaled"     # released FinGPT / FinBERT outputs (see README)
+out_dir = "data/preprocessed/main_volscaled"
+window = 60                                     # input window (trading days)
+cca_blas_threads = 2                            # BLAS threads of the original text CCA fit (not a model setting)
+
+[split]                                         # [start, end)
+train = ["2014-01-01", "2015-08-01"]
+val = ["2015-08-01", "2015-10-01"]
+test = ["2015-10-01", "2016-01-01"]
+
+[labels]                                        # next-day return r_t in percent
+up_threshold = 0.55                             # up if r_t >= 0.55
+down_threshold = -0.55                          # down if r_t <= -0.55; days in between are removed
+vol_threshold = 1.0                             # volatility target: |r_t| >= 1.0
+vol_target = "scaled"                           # |r_t| >= max(sigma_t, 0.25), sigma_t: 20-day std of returns
+
+[graph]                                         # Section 2.2.3
+windows = [60, 126, 252]                        # correlation windows, averaged
+top_k = 10                                      # neighbours per stock

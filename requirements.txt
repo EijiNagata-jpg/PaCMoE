@@ -1,0 +1,11 @@
+# Versions used for the reported experiments (Python 3.11, CUDA 12.1).
+torch==2.4.0
+torch_geometric==2.7.0
+numpy==2.4.6
+pandas==3.0.3
+scipy==1.17.1
+scikit-learn==1.9.0   # text CCA / PCA (preprocessing)
+statsmodels==0.15.0   # ADF test for the fractional differencing order (preprocessing)
+threadpoolctl==3.6.0  # BLAS thread count of the text CCA (preprocessing)
+tqdm>=4.66            # progress bars only (also installed with torch_geometric)
+# numba was not installed; the indicator kernels then run as plain Python (pacmoe/preprocess/ta).
