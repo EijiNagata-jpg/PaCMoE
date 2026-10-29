@@ -2,8 +2,11 @@
 
 Reference implementation of the experiments in
 
-> PaCMoE: Pairwise Cross-Modal Attention Fusion with Mixture-of-Experts for Stock Movement Prediction
-> (manuscript mathematics)
+> Eiji Nagata, Riku Motomochi, Qiu Chen.
+> PaCMoE: Pairwise Cross-Modal Attention Fusion with Mixture-of-Experts for Stock Movement Prediction.
+> *Mathematics* **2026**, *14*(21), 3948. https://doi.org/10.3390/math14213948
+> ([article page](https://www.mdpi.com/2227-7390/14/21/3948))
+
 
 The repository contains only the computation that produced the reported results: preprocessing,
 the model, the training objective, the training and evaluation loops, and the scripts that check
@@ -233,3 +236,22 @@ run on the same preprocessed bundles with deterministic CUDA kernels:
 ```bash
 python scripts/compare_bundles.py data/preprocessed/main <bundle written by the original code>
 ```
+
+## Citation
+
+If you use this code, please cite:
+
+```bibtex
+@article{nagata2026pacmoe,
+  author  = {Nagata, Eiji and Motomochi, Riku and Chen, Qiu},
+  title   = {PaCMoE: Pairwise Cross-Modal Attention Fusion with Mixture-of-Experts for Stock Movement Prediction},
+  journal = {Mathematics},
+  year    = {2026},
+  volume  = {14},
+  number  = {21},
+  pages   = {3948},
+  doi     = {10.3390/math14213948},
+  url     = {https://www.mdpi.com/2227-7390/14/21/3948}
+}
+```
+
